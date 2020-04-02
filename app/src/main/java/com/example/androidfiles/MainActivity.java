@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String IMAGE = "image";
     EditText etContentFile;
     TextView tvFilePath;
-    Button btnCreateFile, btnDeleteFile, btnCreateImageFile, btnDeleteImageFile, btnReadFile, btnReadImage;
+    Button btnCreateFile, btnDeleteFile, btnCreateImageFile, btnDeleteImageFile, btnReadFile, btnReadImage, btnFileList;
     ImageView imageView;
 
     @Override
@@ -36,6 +37,20 @@ public class MainActivity extends AppCompatActivity {
         this.btnCreateImageFile.setOnClickListener(this::createImageFile);
         this.btnReadFile.setOnClickListener(this::readFile);
         this.btnReadImage.setOnClickListener(this::readImage);
+        this.btnDeleteFile.setOnClickListener(this::deleteFiles);
+        this.btnFileList.setOnClickListener(this::fileLists);
+    }
+
+    private void fileLists(View view) {
+        String[] fileList = fileList();
+        for (String files: fileList) {
+            tvFilePath.append(files+"\n");
+        }
+    }
+
+    private void deleteFiles(View view) {
+        boolean deleteFile = deleteFile(FILE_NAME);
+        Toast.makeText(this, "File is Deleted"+deleteFile, Toast.LENGTH_LONG).show();
     }
 
     private void readImage(View view) {
@@ -146,5 +161,6 @@ public class MainActivity extends AppCompatActivity {
         btnReadFile = findViewById(R.id.btn_read_file);
         btnReadImage = findViewById(R.id.btn_read_image);
         imageView = findViewById(R.id.imageView);
+        btnFileList = findViewById(R.id.btn_file_list);
     }
 }

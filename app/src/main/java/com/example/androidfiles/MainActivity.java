@@ -8,21 +8,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String FILE_NAME = "my_file";
-    private static final String FILE = "image";
+    private static final String IMAGE = "image";
     EditText etContentFile;
     TextView tvFilePath;
-    Button btnCreateFile, btnDeleteFile, btnCreateImageFile, btnDeleteImageFile, btnReadFile;
+    Button btnCreateFile, btnDeleteFile, btnCreateImageFile, btnDeleteImageFile, btnReadFile, btnReadImage;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,20 @@ public class MainActivity extends AppCompatActivity {
         this.btnCreateFile.setOnClickListener(this::createFile);
         this.btnCreateImageFile.setOnClickListener(this::createImageFile);
         this.btnReadFile.setOnClickListener(this::readFile);
+        this.btnReadImage.setOnClickListener(this::readImage);
+    }
+
+    private void readImage(View view) {
+        InputStream inputStream = null;
+        Bitmap image = null;
+        try {
+            inputStream = openFileInput(IMAGE);
+            image = BitmapFactory.decodeStream(inputStream);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        imageView.setImageBitmap(image);
     }
 
     private void readFile(View view) {
@@ -67,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = openFileOutput(FILE, MODE_PRIVATE);
+            fileOutputStream = openFileOutput(IMAGE, MODE_PRIVATE);
             data.compress(Bitmap.CompressFormat.JPEG, 50, fileOutputStream);
 
             tvFilePath.setText("Image Written");
@@ -130,5 +144,7 @@ public class MainActivity extends AppCompatActivity {
         btnCreateImageFile = findViewById(R.id.btn_create_image_file);
         btnDeleteImageFile = findViewById(R.id.btn_delete_image_file);
         btnReadFile = findViewById(R.id.btn_read_file);
+        btnReadImage = findViewById(R.id.btn_read_image);
+        imageView = findViewById(R.id.imageView);
     }
 }

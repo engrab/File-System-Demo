@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILE = "image";
     EditText etContentFile;
     TextView tvFilePath;
-    Button btnCreateFile, btnDeleteFile, btnCreateImageFile, btnDeleteImageFile;
+    Button btnCreateFile, btnDeleteFile, btnCreateImageFile, btnDeleteImageFile, btnReadFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,31 @@ public class MainActivity extends AppCompatActivity {
 
         this.btnCreateFile.setOnClickListener(this::createFile);
         this.btnCreateImageFile.setOnClickListener(this::createImageFile);
+        this.btnReadFile.setOnClickListener(this::readFile);
+    }
+
+    private void readFile(View view) {
+        InputStream inputStream = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            inputStream = openFileInput(FILE_NAME);
+            int read;
+            while ((read = inputStream.read()) != -1){
+                stringBuilder.append((char)read);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (inputStream != null){
+                    inputStream.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        tvFilePath.setText(stringBuilder.toString());
     }
 
     private void createImageFile(View view) {
@@ -104,5 +129,6 @@ public class MainActivity extends AppCompatActivity {
         btnDeleteFile = findViewById(R.id.delete_file);
         btnCreateImageFile = findViewById(R.id.btn_create_image_file);
         btnDeleteImageFile = findViewById(R.id.btn_delete_image_file);
+        btnReadFile = findViewById(R.id.btn_read_file);
     }
 }

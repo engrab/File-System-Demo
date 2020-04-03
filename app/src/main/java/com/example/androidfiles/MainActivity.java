@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -20,9 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String FILE_NAME = "my_file";
     private static final String IMAGE = "image";
+    private static final String FILE_DIR = "myfolder";
     EditText etContentFile;
     TextView tvFilePath;
-    Button btnCreateFile, btnDeleteFile, btnCreateImageFile, btnDeleteImageFile, btnReadFile, btnReadImage, btnFileList;
+    Button btnCreateFile, btnDeleteFile, btnCreateImageFile, btnDeleteImageFile,
+            btnReadFile, btnReadImage, btnFileList, btnCreateDir, btnCustomData;
     ImageView imageView;
 
     @Override
@@ -39,6 +42,32 @@ public class MainActivity extends AppCompatActivity {
         this.btnReadImage.setOnClickListener(this::readImage);
         this.btnDeleteFile.setOnClickListener(this::deleteFiles);
         this.btnFileList.setOnClickListener(this::fileLists);
+        this.btnCreateDir.setOnClickListener(this::createDir);
+        this.btnCustomData.setOnClickListener(this::customData);
+    }
+
+    private void customData(View view) {
+        File dir = getDir(FILE_DIR, MODE_PRIVATE);
+        File file = new File(dir, "abc.txt");
+        if (file.exists()){
+            Toast.makeText(this, "Custom Directory Created Successfully", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void createDir(View view) {
+
+        File path = getDir(FILE_DIR, MODE_PRIVATE);
+
+        File file = new File(path, "abc.txt");
+        String data = "This is First File that is custom";
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+            fileOutputStream.write(data.getBytes());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void fileLists(View view) {
@@ -162,5 +191,7 @@ public class MainActivity extends AppCompatActivity {
         btnReadImage = findViewById(R.id.btn_read_image);
         imageView = findViewById(R.id.imageView);
         btnFileList = findViewById(R.id.btn_file_list);
+        btnCreateDir = findViewById(R.id.btn_create_dir);
+        btnCustomData = findViewById(R.id.btn_read_custom_file);
     }
 }

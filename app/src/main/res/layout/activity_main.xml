@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Create Image File" />
+            android:text="Create Image" />
 
         <Button
             android:id="@+id/btn_delete_image_file"
@@ -104,7 +104,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Delete Image File" />
+            android:text="Delete Image" />
+
+        <Button
+            android:id="@+id/btn_create_dir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Create Dir" />
     </LinearLayout>
 
     <LinearLayout
@@ -136,6 +144,14 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="Read Image" />
+
+        <Button
+            android:id="@+id/btn_read_custom_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Read Custom" />
     </LinearLayout>
 
     <ImageView
